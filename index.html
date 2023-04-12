@@ -31,9 +31,31 @@
 
   <title>Magistro</title>
   <link rel="manifest" href="manifest.json">
-  
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = '578435118';
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
 <body>
-  <a id="testing" href="/app.html">Click me</a>
+  <button id="myButton">Click me</button>
+  <script>
+    const button = document.getElementById("myButton");
+    button.addEventListener("click", function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
